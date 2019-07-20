@@ -57,17 +57,15 @@ static uint32_t status_send(generic_message_server_t * p_server,
 {
     generic_message_status_msg_pkt_t msg_pkt;
 
-    if (p_params->present_on_off > GENERIC_MESSAGE_MAX ||
-        p_params->target_on_off  > GENERIC_MESSAGE_MAX ||
-        p_params->remaining_time_ms > TRANSITION_TIME_STEP_10M_MAX)
+    if (p_params->remaining_time_ms > TRANSITION_TIME_STEP_10M_MAX)
     {
         return NRF_ERROR_INVALID_PARAM;
     }
 
-    msg_pkt.present_on_off = p_params->present_on_off;
+    msg_pkt.present_message = p_params->present_message;
     if (p_params->remaining_time_ms > 0)
     {
-        msg_pkt.target_on_off = p_params->target_on_off;
+        msg_pkt.target_message = p_params->target_message;
         msg_pkt.remaining_time = model_transition_time_encode(p_params->remaining_time_ms);
     }
 
@@ -103,10 +101,7 @@ static void periodic_publish_cb(access_model_handle_t handle, void * p_args)
 
 static inline bool set_params_validate(const access_message_rx_t * p_rx_msg, const generic_message_set_msg_pkt_t * p_params)
 {
-    return (
-            (p_rx_msg->length == GENERIC_MESSAGE_SET_MINLEN || p_rx_msg->length == GENERIC_MESSAGE_SET_MAXLEN) &&
-            (p_params->on_off <= GENERIC_MESSAGE_MAX)
-           );
+    return p_rx_msg->length >= GENERIC_MESSAGE_SET_MINLEN && p_rx_msg->length <= GENERIC_MESSAGE_SET_MAXLEN;
 }
 
 static void handle_set(access_model_handle_t model_handle, const access_message_rx_t * p_rx_msg, void * p_args)
@@ -119,7 +114,7 @@ static void handle_set(access_model_handle_t model_handle, const access_message_
 
     if (set_params_validate(p_rx_msg, p_msg_params_packed))
     {
-        in_data.on_off = p_msg_params_packed->on_off;
+        in_data.message = p_msg_params_packed->message;
         in_data.tid = p_msg_params_packed->tid;
 
         if (model_tid_validate(&p_server->tid_tracker, &p_rx_msg->meta_data, GENERIC_MESSAGE_OPCODE_SET, in_data.tid))

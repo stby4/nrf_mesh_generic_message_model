@@ -55,9 +55,6 @@
 /** Model Company ID */
 #define GENERIC_MESSAGE_COMPANY_ID 0xFFFF
 
-/** Maximum value of the message state, as defined in the Mesh Model Specification v1.0 */
-#define GENERIC_MESSAGE_MAX        (0x01)
-
 /**
  * Unpacked message structure typedefs are used for API interfaces and for implementing model code. This helps to minimize code
  * footprint.

@@ -51,7 +51,7 @@
 /** Shortest allowed length for the Set message. */
 #define GENERIC_MESSAGE_SET_MINLEN 2
 /** Longest allowed length for the Set message. */
-#define GENERIC_MESSAGE_SET_MAXLEN 4
+#define GENERIC_MESSAGE_SET_MAXLEN 247
 
 /** Shortest allowed length for the Status message. */
 #define GENERIC_MESSAGE_STATUS_MINLEN 1
@@ -81,8 +81,8 @@ typedef struct __attribute((packed))
 /** Message format for the generic_message Status message. */
 typedef struct __attribute((packed))
 {
-    uint8_t present_omessage;                                 /**< The present value of the Generic message state */
-    uint8_t target_omessage;                                  /**< The target value of the Generic message state (optional) */
+    uint8_t present_message;                                 /**< The present value of the Generic message state */
+    uint8_t target_message;                                  /**< The target value of the Generic message state (optional) */
     uint8_t remaining_time;                                 /**< Encoded remaining time */
 } generic_message_status_msg_pkt_t;
 
