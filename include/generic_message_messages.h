@@ -61,10 +61,10 @@
 /** Generic message model message opcodes. */
 typedef enum
 {
-    GENERIC_MESSAGE_OPCODE_SET = 0x8102,
-    GENERIC_MESSAGE_OPCODE_SET_UNACKNOWLEDGED = 0x8103,
-    GENERIC_MESSAGE_OPCODE_GET = 0x8101,
-    GENERIC_MESSAGE_OPCODE_STATUS = 0x8104
+    GENERIC_MESSAGE_OPCODE_SET = 0x8202,
+    GENERIC_MESSAGE_OPCODE_SET_UNACKNOWLEDGED = 0x8203,
+    GENERIC_MESSAGE_OPCODE_GET = 0x8201,
+    GENERIC_MESSAGE_OPCODE_STATUS = 0x8204
 } generic_message_opcode_t;
 
 /** Packed message structure typedefs are used for packing and unpacking byte stream. */
