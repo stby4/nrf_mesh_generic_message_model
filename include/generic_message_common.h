@@ -63,22 +63,22 @@
 /** Structure containing value of the message state */
 typedef struct
 {
-    bool message;                                            /**< State to set */
+    uint8_t* message;                                            /**< message to set */
     uint8_t tid;                                            /**< Transaction ID */
 } generic_message_state_t;
 
 /** Mandatory parameters for the Generic message Set message. */
 typedef struct
 {
-    bool message;                                            /**< State to set */
+    uint8_t* message;                                            /**< message to set */
     uint8_t tid;                                            /**< Transaction ID */
 } generic_message_set_params_t;
 
 /** Parameters for the Generic message Status message. */
 typedef struct
 {
-    uint8_t present_message;                                 /**< The present value of the Generic message state */
-    uint8_t target_message;                                  /**< The target value of the Generic message state (optional) */
+    uint8_t* present_message;                                 /**< The present value of the Generic message state */
+    uint8_t* target_message;                                  /**< The target value of the Generic message state (optional) */
     uint32_t remaining_time_ms;                             /**< Remaining time value in milliseconds */
 } generic_message_status_params_t;
 
