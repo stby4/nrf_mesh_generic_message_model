@@ -72,7 +72,7 @@ typedef enum
 /** Message format for the generic_message Set message. */
 typedef struct __attribute((packed))
 {
-    uint8_t message;                                         /**< State to set */
+    uint8_t * message;                                         /**< State to set */
     uint8_t tid;                                            /**< Transaction number for application */
     uint8_t transition_time;                                /**< Encoded transition time value */
     uint8_t delay;                                          /**< Encoded message execution delay in 5 millisecond steps */
@@ -81,8 +81,7 @@ typedef struct __attribute((packed))
 /** Message format for the generic_message Status message. */
 typedef struct __attribute((packed))
 {
-    uint8_t present_message;                                 /**< The present value of the Generic message state */
-    uint8_t target_message;                                  /**< The target value of the Generic message state (optional) */
+    uint8_t * message;                                 /**< The present value of the Generic message state */
     uint8_t remaining_time;                                 /**< Encoded remaining time */
 } generic_message_status_msg_pkt_t;
 

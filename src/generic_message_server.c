@@ -62,10 +62,10 @@ static uint32_t status_send(generic_message_server_t * p_server,
         return NRF_ERROR_INVALID_PARAM;
     }
 
-    msg_pkt.present_message = p_params->present_message;
+    msg_pkt.message = p_params->message;
     if (p_params->remaining_time_ms > 0)
     {
-        msg_pkt.target_message = p_params->target_message;
+        msg_pkt.message = p_params->message;
         msg_pkt.remaining_time = model_transition_time_encode(p_params->remaining_time_ms);
     }
 

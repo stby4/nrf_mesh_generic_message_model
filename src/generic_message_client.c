@@ -57,25 +57,20 @@ static void status_handle(access_model_handle_t handle, const access_message_rx_
     generic_message_client_t * p_client = (generic_message_client_t *) p_args;
     generic_message_status_params_t in_data = {0};
 
-    if (p_rx_msg->length == GENERIC_MESSAGE_STATUS_MINLEN || p_rx_msg->length == GENERIC_MESSAGE_STATUS_MAXLEN)
+    generic_message_status_msg_pkt_t * p_msg_params_packed = (generic_message_status_msg_pkt_t *) p_rx_msg->p_data;
+
+    if (p_rx_msg->length <= GENERIC_MESSAGE_STATUS_MINLEN)
     {
-        generic_message_status_msg_pkt_t * p_msg_params_packed = (generic_message_status_msg_pkt_t *) p_rx_msg->p_data;
-
-        if (p_rx_msg->length == GENERIC_MESSAGE_STATUS_MINLEN)
-        {
-            in_data.present_message = p_msg_params_packed->present_message;
-            in_data.target_message = p_msg_params_packed->present_message;
-            in_data.remaining_time_ms = 0;
-        }
-        else
-        {
-            in_data.present_message = p_msg_params_packed->present_message;
-            in_data.target_message = p_msg_params_packed->target_message;
-            in_data.remaining_time_ms = model_transition_time_decode(p_msg_params_packed->remaining_time);
-        }
-
-        p_client->settings.p_callbacks->message_status_cb(p_client, &p_rx_msg->meta_data, &in_data);
+        in_data.message = p_msg_params_packed->message;
+        in_data.remaining_time_ms = 0;
     }
+    else
+    {
+        in_data.message = p_msg_params_packed->message;
+        in_data.remaining_time_ms = model_transition_time_decode(p_msg_params_packed->remaining_time);
+    }
+
+    p_client->settings.p_callbacks->message_status_cb(p_client, &p_rx_msg->meta_data, &in_data);
 }
 
 static const access_opcode_handler_t m_opcode_handlers[] =
@@ -86,7 +81,7 @@ static const access_opcode_handler_t m_opcode_handlers[] =
 static uint8_t message_set_packet_create(generic_message_set_msg_pkt_t *p_set, const generic_message_set_params_t * p_params,
                                       const model_transition_t * p_transition)
 {
-        p_set->message = p_params->message ? 1 : 0;
+        p_set->message = p_params->message;
         p_set->tid = p_params->tid;
 
         if (p_transition != NULL)
