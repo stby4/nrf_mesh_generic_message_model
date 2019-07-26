@@ -51,7 +51,7 @@
 /** Shortest allowed length for the Set message. */
 #define GENERIC_MESSAGE_SET_MINLEN 2
 /** Longest allowed length for the Set message. */
-#define GENERIC_MESSAGE_SET_MAXLEN 247
+#define GENERIC_MESSAGE_SET_MAXLEN 2048
 
 /** Shortest allowed length for the Status message. */
 #define GENERIC_MESSAGE_STATUS_MINLEN 1
