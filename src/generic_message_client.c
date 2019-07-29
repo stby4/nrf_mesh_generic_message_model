@@ -78,7 +78,7 @@ static const access_opcode_handler_t m_opcode_handlers[] =
     {ACCESS_OPCODE_SIG(GENERIC_MESSAGE_OPCODE_STATUS), status_handle},
 };
 
-static uint8_t message_set_packet_create(generic_message_set_msg_pkt_t *p_set, const generic_message_set_params_t * p_params,
+static uint16_t message_set_packet_create(generic_message_set_msg_pkt_t *p_set, const generic_message_set_params_t * p_params,
                                       const model_transition_t * p_transition)
 {
         p_set->message = p_params->message;
