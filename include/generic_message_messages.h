@@ -48,15 +48,10 @@
  * @{
  */
 
-/** Shortest allowed length for the Set message. */
-#define GENERIC_MESSAGE_SET_MINLEN 2
-/** Longest allowed length for the Set message. */
-#define GENERIC_MESSAGE_SET_MAXLEN 2048
-
-/** Shortest allowed length for the Status message. */
-#define GENERIC_MESSAGE_STATUS_MINLEN 1
-/** Longest allowed length for the Status message. */
-#define GENERIC_MESSAGE_STATUS_MAXLEN 3
+/** Shortest allowed length for the message. */
+#define GENERIC_MESSAGE_MINLEN 1
+/** Longest allowed length for the message. */
+#define GENERIC_MESSAGE_MAXLEN 65535
 
 /** Generic message model message opcodes. */
 typedef enum
@@ -73,6 +68,7 @@ typedef enum
 typedef struct __attribute((packed))
 {
     uint8_t * message;                                         /**< State to set */
+    uint16_t msg_len;
     uint8_t tid;                                            /**< Transaction number for application */
     uint8_t transition_time;                                /**< Encoded transition time value */
     uint8_t delay;                                          /**< Encoded message execution delay in 5 millisecond steps */
@@ -82,8 +78,9 @@ typedef struct __attribute((packed))
 typedef struct __attribute((packed))
 {
     uint8_t * message;                                 /**< The present value of the Generic message state */
+    uint16_t msg_len;
     uint8_t remaining_time;                                 /**< Encoded remaining time */
-} generic_message_status_msg_pkt_t;
+} generic_message_get_msg_pkt_t;
 
 /**@} end of GENERIC_MESSAGE_MODEL_INTENRAL */
 #endif /* GENERIC_MESSAGE_MESSAGES_H__ */

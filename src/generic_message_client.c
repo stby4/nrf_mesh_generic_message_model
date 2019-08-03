@@ -52,30 +52,25 @@
 
 /** Opcode Handlers */
 
-static void status_handle(access_model_handle_t handle, const access_message_rx_t * p_rx_msg, void * p_args)
+static void message_handle(access_model_handle_t handle, const access_message_rx_t * p_rx_msg, void * p_args)
 {
     generic_message_client_t * p_client = (generic_message_client_t *) p_args;
-    generic_message_status_params_t in_data = {0};
+    generic_message_get_params_t in_data = {0};
 
-    generic_message_status_msg_pkt_t * p_msg_params_packed = (generic_message_status_msg_pkt_t *) p_rx_msg->p_data;
+    generic_message_get_msg_pkt_t * p_msg_params_packed = (generic_message_get_msg_pkt_t *) p_rx_msg->p_data;
 
-    if (p_rx_msg->length <= GENERIC_MESSAGE_STATUS_MINLEN)
-    {
-        in_data.message = p_msg_params_packed->message;
-        in_data.remaining_time_ms = 0;
-    }
-    else
-    {
-        in_data.message = p_msg_params_packed->message;
-        in_data.remaining_time_ms = model_transition_time_decode(p_msg_params_packed->remaining_time);
-    }
+    __LOG(LOG_SRC_APP, LOG_LEVEL_DBG1, "Received sth: %s, len: %d\n", &p_msg_params_packed->message, p_rx_msg->length);
+
+    in_data.message = p_msg_params_packed->message;
+    in_data.msg_len = p_rx_msg->length;
+    in_data.remaining_time_ms = 0;
 
     p_client->settings.p_callbacks->message_status_cb(p_client, &p_rx_msg->meta_data, &in_data);
 }
 
 static const access_opcode_handler_t m_opcode_handlers[] =
 {
-    {ACCESS_OPCODE_SIG(GENERIC_MESSAGE_OPCODE_STATUS), status_handle},
+    {ACCESS_OPCODE_SIG(GENERIC_MESSAGE_OPCODE_STATUS), message_handle},
 };
 
 static uint16_t message_set_packet_create(generic_message_set_msg_pkt_t *p_set, const generic_message_set_params_t * p_params,
@@ -88,12 +83,9 @@ static uint16_t message_set_packet_create(generic_message_set_msg_pkt_t *p_set, 
         {
             p_set->transition_time = model_transition_time_encode(p_transition->transition_time_ms);
             p_set->delay = model_delay_encode(p_transition->delay_ms);
-            return GENERIC_MESSAGE_SET_MAXLEN;
         }
-        else
-        {
-            return GENERIC_MESSAGE_SET_MINLEN;
-        }
+        
+        return p_params->msg_len;
 }
 
 static void message_create(generic_message_client_t * p_client, uint16_t tx_opcode, const uint8_t * p_buffer,

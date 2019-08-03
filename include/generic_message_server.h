@@ -71,7 +71,7 @@ typedef void (*generic_message_state_set_cb_t)(const generic_message_server_t * 
                                              const access_message_rx_meta_t * p_meta,
                                              const generic_message_set_params_t * p_in,
                                              const model_transition_t * p_in_transition,
-                                             generic_message_status_params_t * p_out);
+                                             generic_message_get_params_t * p_out);
 
 /**
  * Callback type for Generic message Get message.
@@ -82,7 +82,7 @@ typedef void (*generic_message_state_set_cb_t)(const generic_message_server_t * 
  */
 typedef void (*generic_message_state_get_cb_t)(const generic_message_server_t * p_self,
                                              const access_message_rx_meta_t * p_meta,
-                                             generic_message_status_params_t * p_out);
+                                             generic_message_get_params_t * p_out);
 
 /**
  * Transaction callbacks for the message state.
@@ -152,7 +152,7 @@ uint32_t generic_message_server_init(generic_message_server_t * p_server, uint8_
  * @retval   NRF_SUCCESS   If the message is published successfully.
  * @returns  Other appropriate error codes on failure.
  */
-uint32_t generic_message_server_status_publish(generic_message_server_t * p_server, const generic_message_status_params_t * p_params);
+uint32_t generic_message_server_publish(generic_message_server_t * p_server, const generic_message_get_params_t * p_params);
 
 /**@} end of GENERIC_MESSAGE_SERVER */
 #endif /* GENERIC_MESSAGE_SERVER_H__ */

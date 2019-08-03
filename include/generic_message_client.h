@@ -66,7 +66,7 @@ typedef struct __generic_message_client_t generic_message_client_t;
  */
 typedef void (*generic_message_state_status_cb_t)(const generic_message_client_t * p_self,
                                                 const access_message_rx_meta_t * p_meta,
-                                                const generic_message_status_params_t * p_in);
+                                                const generic_message_get_params_t * p_in);
 typedef struct
 {
     /** Client model response message callback. */
