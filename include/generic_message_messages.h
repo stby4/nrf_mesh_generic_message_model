@@ -51,7 +51,7 @@
 /** Shortest allowed length for the message. */
 #define GENERIC_MESSAGE_MINLEN 0
 /** Longest allowed length for the message. */
-#define GENERIC_MESSAGE_MAXLEN 380
+#define GENERIC_MESSAGE_MAXLEN 121
 
 /** Generic message model message opcodes. */
 typedef enum
